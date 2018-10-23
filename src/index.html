@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Web Interpreter</title>
+    <script src="pyodide/pyodide.js"></script>
+</head>
+<body>
+    Test
+</body>
+<script>
+  languagePluginLoader.then(() => {
+    pyodide.runPython('print("loaded")');
+  });
+</script>
+</html>

@@ -1,0 +1,65 @@
+{
+  "dependencies": {
+    "matplotlib": [
+      "cycler",
+      "kiwisolver",
+      "numpy",
+      "pyparsing",
+      "python-dateutil",
+      "pytz"
+    ],
+    "kiwisolver": [],
+    "pluggy": [],
+    "more-itertools": [],
+    "numpy": [],
+    "pyparsing": [],
+    "python-dateutil": [],
+    "pytest": [
+      "atomicwrites",
+      "attrs",
+      "more-itertools",
+      "pluggy",
+      "py",
+      "setuptools"
+    ],
+    "cycler": [],
+    "pytz": [],
+    "attrs": [],
+    "nose": [
+      "setuptools"
+    ],
+    "pandas": [
+      "numpy",
+      "python-dateutil",
+      "pytz"
+    ],
+    "py": [],
+    "setuptools": [
+      "pyparsing"
+    ],
+    "atomicwrites": [],
+    "test": []
+  },
+  "import_name_to_package_name": {
+    "matplotlib": "matplotlib",
+    "mpl_toolkits": "matplotlib",
+    "kiwisolver": "kiwisolver",
+    "pluggy": "pluggy",
+    "more_itertools": "more-itertools",
+    "numpy": "numpy",
+    "pyparsing": "pyparsing",
+    "dateutil": "python-dateutil",
+    "pytest": "pytest",
+    "cycler": "cycler",
+    "pytz": "pytz",
+    "attr": "attrs",
+    "nose": "nose",
+    "pandas": "pandas",
+    "py": "py",
+    "py.code": "py",
+    "setuptools": "setuptools",
+    "easy_install": "setuptools",
+    "pkg_resources": "setuptools",
+    "atomicwrites": "atomicwrites"
+  }
+}
