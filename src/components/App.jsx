@@ -1,9 +1,17 @@
 import React from 'react';
 
+import Header from './Header';
+import Terminal from './Terminal';
+
+import '../styles/app.scss';
+
 class App extends React.Component {
   render() {
     return (
-      <div>Test</div>
+      <div className="app">
+        {/*<Header/>
+        <Terminal/>*/}
+      </div>
     );
   }
 }
