@@ -1,13 +1,11 @@
-import m from 'mithril';
+import React from 'react';
 
-const App = {
-  view: () => {
+class App extends React.Component {
+  render() {
     return (
-      <div>
-        Test
-      </div>
+      <div>Test</div>
     );
   }
-};
+}
 
 export default App;
