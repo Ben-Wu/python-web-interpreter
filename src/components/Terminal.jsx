@@ -1,5 +1,6 @@
 import React from 'react';
 
+import TerminalInput from './TerminalInput';
 import '../styles/terminal.scss';
 
 class Terminal extends React.Component {
@@ -8,15 +9,14 @@ class Terminal extends React.Component {
     super(props);
 
     this.state = {
-      currentInput: '',
       currentOutput: '',
       error: false,
       ready: false,
-      version: ''
+      version: '',
+      lines: []
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleSubmitLine = this.handleSubmitLine.bind(this);
   }
 
   componentDidMount() {
@@ -31,14 +31,13 @@ class Terminal extends React.Component {
     });
   }
 
-  handleInputChange(e) {
-    this.setState({currentInput: e.target.value});
-  }
-
-  handleKeyUp(e) {
-    if (e.keyCode === 13) {
-      console.log(this.state.currentInput);
-      try {
+  handleSubmitLine(line) {
+    console.log(line);
+    const lines = this.state.lines.slice();
+    lines.push(this.renderInputLine(line.slice(0, line.length - 1)));
+    this.setState({lines});
+    /*
+    try {
         const currentOutput = window.pyodide.runPython(this.state.currentInput);
         this.setState({
           error: false,
@@ -51,7 +50,13 @@ class Terminal extends React.Component {
           currentOutput
         });
       }
-    }
+     */
+  }
+
+  renderInputLine(text) {
+    return (
+      <TerminalInput readOnly={true} text={text}/>
+    );
   }
 
   renderPyodideLoadingView() {
@@ -64,12 +69,8 @@ class Terminal extends React.Component {
     return (
       <div>
         <div className="terminal-output">Python {this.state.version}</div>
-        <span>>>  </span>
-        <input className="terminal-input" type="text" onChange={this.handleInputChange}
-               onKeyUp={this.handleKeyUp}/>
-        <div className={`terminal-output ${this.state.error ? 'error' : ''}`}>
-          {this.state.currentOutput}
-        </div>
+        {this.state.lines}
+        {<TerminalInput onSubmit={this.handleSubmitLine} text={this.state.currentInput} readOnly={false}/>}
       </div>
     );
   }

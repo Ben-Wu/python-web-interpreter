@@ -1,21 +1,43 @@
+$color-highlight: #ff7de3;
+$color-error: #ff2649;
+$color-primary-text: #fafafa;
+
 .terminal {
   padding: 8px;
-  background: #222222;
+  overflow-y: auto;
+  background: #2a2a2e;
   flex-grow: 1;
-  color: #ff7de3;
+  color: $color-primary-text;
 }
 
 .terminal-input {
+  display: flex;
+}
+
+.terminal-input-field {
+  height: 100vh;
+  flex-grow: 1;
+  max-width: 97%;
   background: none;
+  padding: 0;
   border: 0;
   outline: 0;
-  color: #eeeeee;
+  color: $color-primary-text;
+  resize: vertical;
+
+  &.read-only {
+    height: 100%;
+    resize: none;
+  }
+}
+
+.terminal-input-caret {
+  color: $color-highlight;
+  padding-right: 6px;
 }
 
 .terminal-output {
-  color: #ffffff;
-
   .error {
-    color: #ff2444;
+    color: $color-error;
   }
 }
