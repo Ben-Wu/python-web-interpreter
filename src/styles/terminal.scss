@@ -16,6 +16,7 @@ $color-primary-text: #fafafa;
 
 .terminal-input-field {
   height: 100vh;
+  min-height: 100vh;
   flex-grow: 1;
   max-width: 97%;
   background: none;
@@ -27,6 +28,7 @@ $color-primary-text: #fafafa;
 
   &.read-only {
     height: 100%;
+    min-height: 0;
     resize: none;
   }
 }

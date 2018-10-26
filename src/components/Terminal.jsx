@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TerminalInput from './TerminalInput';
+import TerminalOutput from './TerminalOutput';
 import '../styles/terminal.scss';
 
 class Terminal extends React.Component {
@@ -32,30 +33,38 @@ class Terminal extends React.Component {
   }
 
   handleSubmitLine(line) {
-    console.log(line);
+    line = line.slice(0, line.length - 1); // remove newline
+
     const lines = this.state.lines.slice();
-    lines.push(this.renderInputLine(line.slice(0, line.length - 1)));
-    this.setState({lines});
-    /*
+    lines.push(this.renderInputLine(lines.length, line));
+
+    if (line.trim() === '') {
+      this.setState({lines});
+      return;
+    }
+
     try {
-        const currentOutput = window.pyodide.runPython(this.state.currentInput);
-        this.setState({
-          error: false,
-          currentOutput
-        });
-      } catch (e) {
-        const currentOutput = e.message.split('\n').map(line => <div className="error" key={line}>{line}</div>);
-        this.setState({
-          error: true,
-          currentOutput
-        });
-      }
-     */
+      const currentOutput = window.pyodide.runPython(line);
+      console.log(currentOutput);
+      lines.push(this.renderOutputLine(lines.length, currentOutput, false))
+    } catch (e) {
+      const currentOutput = e.message.split('\n')
+        .map((line, i) => <div className="error" key={i}>{line}</div>);
+      lines.push(this.renderOutputLine(lines.length, currentOutput, false));
+    }
+
+    this.setState({lines});
   }
 
-  renderInputLine(text) {
+  renderInputLine(key, text) {
     return (
-      <TerminalInput readOnly={true} text={text}/>
+      <TerminalInput key={key} readOnly={true} text={text}/>
+    );
+  }
+
+  renderOutputLine(key, text, error) {
+    return (
+      <TerminalOutput key={key} text={text} error={error}/>
     );
   }
 
@@ -70,7 +79,7 @@ class Terminal extends React.Component {
       <div>
         <div className="terminal-output">Python {this.state.version}</div>
         {this.state.lines}
-        {<TerminalInput onSubmit={this.handleSubmitLine} text={this.state.currentInput} readOnly={false}/>}
+        <TerminalInput onSubmit={this.handleSubmitLine} text={this.state.currentInput} readOnly={false}/>
       </div>
     );
   }
