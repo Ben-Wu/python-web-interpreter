@@ -37,7 +37,8 @@ module.exports = {
       filename: 'index.html'
     }),
     new CopyWebpackPlugin([
-      { from: 'src/pyodide', to: 'pyodide' }
+      { from: 'src/pyodide', to: 'pyodide' },
+      { from: 'CNAME', to: '' }
     ])
   ],
   resolve: {

@@ -7,9 +7,9 @@
 
 .app-header{padding:12px;text-align:center;background:#0c0c0d}.app-header-title{font-size:16pt;color:#ffffff}
 
-.terminal{padding:8px;background:#222222;flex-grow:1;color:#ff7de3}.terminal-input{background:none;border:0;outline:0;color:#eeeeee}.terminal-output{color:#ffffff}.terminal-output .error{color:#ff2444}
+.terminal{padding:8px;overflow-y:auto;background:#2a2a2e;flex-grow:1;color:#fafafa}.terminal-input{display:flex}.terminal-input-field{height:100vh;min-height:100vh;flex-grow:1;max-width:97%;background:none;padding:0;border:0;outline:0;color:#fafafa;resize:vertical}.terminal-input-field.read-only{height:100%;min-height:0;resize:none}.terminal-input-caret{color:#ff7de3;padding-right:6px}.terminal-output .error{color:#ff2649}
 
-.app{min-height:100vh;display:flex;flex-direction:column}
+.app{height:100vh;display:flex;flex-direction:column;overflow:hidden}
 
 body{font-family:'Source Code Pro', monospace}
 

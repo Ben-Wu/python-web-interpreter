@@ -9,7 +9,8 @@
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "start-host": "webpack-dev-server --config ./webpack.config.js --mode development --host 0.0.0.0",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "clean": "rm -r ./docs"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
