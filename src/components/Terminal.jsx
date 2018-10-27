@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TerminalInput from './TerminalInput';
+import TerminalInputReadOnly from './TerminalInputReadOnly';
 import TerminalOutput from './TerminalOutput';
 import '../styles/terminal.scss';
 
@@ -14,7 +15,8 @@ class Terminal extends React.Component {
       error: false,
       ready: false,
       version: '',
-      lines: []
+      lines: [],
+      inputHistory: [],
     };
 
     this.handleSubmitLine = this.handleSubmitLine.bind(this);
@@ -33,8 +35,6 @@ class Terminal extends React.Component {
   }
 
   handleSubmitLine(line) {
-    line = line.slice(0, line.length - 1); // remove newline
-
     const lines = this.state.lines.slice();
     lines.push(this.renderInputLine(lines.length, line));
 
@@ -53,12 +53,18 @@ class Terminal extends React.Component {
       lines.push(this.renderOutputLine(lines.length, currentOutput, false));
     }
 
-    this.setState({lines});
+    const inputHistory = this.state.inputHistory.slice();
+    inputHistory.push(line);
+
+    this.setState({
+      inputHistory,
+      lines
+    });
   }
 
   renderInputLine(key, text) {
     return (
-      <TerminalInput key={key} readOnly={true} text={text}/>
+      <TerminalInputReadOnly key={key} text={text}/>
     );
   }
 
@@ -79,7 +85,8 @@ class Terminal extends React.Component {
       <div>
         <div className="terminal-output">Python {this.state.version}</div>
         {this.state.lines}
-        <TerminalInput onSubmit={this.handleSubmitLine} text={this.state.currentInput} readOnly={false}/>
+        <TerminalInput onSubmit={this.handleSubmitLine} text={this.state.currentInput}
+                       readOnly={false} history={this.state.inputHistory}/>
       </div>
     );
   }

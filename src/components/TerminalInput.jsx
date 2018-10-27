@@ -1,20 +1,30 @@
 import React from 'react';
 import Textarea from 'react-textarea-autosize';
 
+import TerminalInputReadOnly from './TerminalInputReadOnly';
 import '../styles/terminal.scss';
 
-class TerminalInput extends React.Component {
+class TerminalInput extends TerminalInputReadOnly {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      currentInput: this.props.text || '',
-      version: ''
+      currentInput: props.text || '',
+      historyPosition: props.history.length,
+      pendingInput: ''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.history.length !== this.props.history.length) {
+      this.setState({
+        historyPosition: this.props.history.length
+      });
+    }
   }
 
   handleInputChange(e) {
@@ -22,23 +32,59 @@ class TerminalInput extends React.Component {
   }
 
   handleKeyUp(e) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13) { // enter
+      e.preventDefault();
+      e.stopPropagation();
       this.props.onSubmit(this.state.currentInput);
-      this.setState({currentInput: ''})
+      this.setState({
+        currentInput: '',
+        pendingInput: ''
+      });
+    } else if (e.keyCode === 38) { // up
+      if (this.state.historyPosition === 0 || this.props.history.length === 0) {
+        return;
+      }
+      const historyPosition = Math.max(this.state.historyPosition - 1, 0);
+      const line = this.props.history[historyPosition];
+      if (historyPosition === this.props.history.length - 1) {
+        this.setState({
+          currentInput: line,
+          pendingInput: this.state.currentInput,
+          historyPosition
+        });
+      } else {
+        this.setState({
+          currentInput: line,
+          historyPosition
+        });
+      }
+    } else if (e.keyCode === 40) { // down
+      if (this.props.history.length === 0) {
+        return;
+      }
+      const historyPosition = Math.min(this.state.historyPosition + 1, this.props.history.length);
+      const line = historyPosition === this.props.history.length
+        ? this.state.pendingInput
+        : this.props.history[historyPosition];
+      this.setState({
+        currentInput: line,
+        historyPosition
+      });
     }
   }
 
-  render() {
+  renderTextField() {
     return (
-      <div className="terminal-input">
-        <span className="terminal-input-caret">>>  </span>
-        <Textarea className={`terminal-input-field ${this.props.readOnly ? 'read-only' : ''}`}
-                  spellCheck={false}
-                  readOnly={this.props.readOnly}
-                  onChange={this.handleInputChange}
-                  onKeyUp={this.handleKeyUp}
-                  value={this.state.currentInput}/>
-      </div>
+      <Textarea className="terminal-input-field"
+                spellCheck={false}
+                readOnly={false}
+                onChange={this.handleInputChange}
+                onKeyUp={this.handleKeyUp}
+                value={this.state.currentInput}
+                autoFocus
+                inputRef={tag => tag.onkeydown = e => {
+                  if (e.keyCode === 13) e.preventDefault()
+                }}/>
     );
   }
 }
