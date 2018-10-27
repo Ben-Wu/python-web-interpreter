@@ -3,11 +3,21 @@ $color-error: #ff2649;
 $color-primary-text: #fafafa;
 
 .terminal {
-  padding: 8px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   background: #2a2a2e;
   flex-grow: 1;
   color: $color-primary-text;
+}
+
+.terminal-text {
+  flex-grow: 1;
+  padding: 12px;
+  overflow-y: scroll;
+}
+
+.terminal-tools {
+
 }
 
 .terminal-input {

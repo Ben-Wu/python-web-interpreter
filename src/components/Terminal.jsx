@@ -1,6 +1,8 @@
 import React from 'react';
 
+import HistoryView from './HistoryView';
 import TerminalInput from './TerminalInput';
+import TerminalInputReadOnly from './TerminalInputReadOnly';
 import TerminalOutput from './TerminalOutput';
 import '../styles/terminal.scss';
 
@@ -10,14 +12,15 @@ class Terminal extends React.Component {
     super(props);
 
     this.state = {
-      currentOutput: '',
-      error: false,
+      currentInput: '',
       ready: false,
       version: '',
-      lines: []
+      lines: [],
+      inputHistory: [],
     };
 
     this.handleSubmitLine = this.handleSubmitLine.bind(this);
+    this.handleHistorySelected = this.handleHistorySelected.bind(this);
   }
 
   componentDidMount() {
@@ -33,8 +36,6 @@ class Terminal extends React.Component {
   }
 
   handleSubmitLine(line) {
-    line = line.slice(0, line.length - 1); // remove newline
-
     const lines = this.state.lines.slice();
     lines.push(this.renderInputLine(lines.length, line));
 
@@ -46,19 +47,31 @@ class Terminal extends React.Component {
     try {
       const currentOutput = window.pyodide.runPython(line);
       console.log(currentOutput);
-      lines.push(this.renderOutputLine(lines.length, currentOutput, false))
+      lines.push(this.renderOutputLine(lines.length, currentOutput, false));
     } catch (e) {
       const currentOutput = e.message.split('\n')
         .map((line, i) => <div className="error" key={i}>{line}</div>);
       lines.push(this.renderOutputLine(lines.length, currentOutput, false));
     }
 
-    this.setState({lines});
+    const inputHistory = this.state.inputHistory.slice();
+    inputHistory.push(line);
+
+    this.setState({
+      inputHistory,
+      lines
+    });
+  }
+
+  handleHistorySelected(text) {
+    this.setState({
+      currentInput: text
+    });
   }
 
   renderInputLine(key, text) {
     return (
-      <TerminalInput key={key} readOnly={true} text={text}/>
+      <TerminalInputReadOnly key={key} text={text}/>
     );
   }
 
@@ -70,16 +83,29 @@ class Terminal extends React.Component {
 
   renderPyodideLoadingView() {
     return (
-      <div>Initializing Python...</div>
+      <div className="terminal-text">Initializing Python...</div>
     );
   }
 
   renderTerminalView() {
     return (
-      <div>
+      <div className="terminal-text">
         <div className="terminal-output">Python {this.state.version}</div>
         {this.state.lines}
-        <TerminalInput onSubmit={this.handleSubmitLine} text={this.state.currentInput} readOnly={false}/>
+        <TerminalInput
+          onSubmit={this.handleSubmitLine}
+          text={this.state.currentInput}
+          readOnly={false} history={this.state.inputHistory}/>
+      </div>
+    );
+  }
+
+  renderToolsView() {
+    return (
+      <div className="terminal-tools">
+        <HistoryView
+          lines={this.state.inputHistory}
+          onLineSelected={this.handleHistorySelected}/>
       </div>
     );
   }
@@ -88,6 +114,7 @@ class Terminal extends React.Component {
     return (
       <div className="terminal">
         {this.state.ready ? this.renderTerminalView() : this.renderPyodideLoadingView()}
+        {this.state.ready ? this.renderToolsView() : ''}
       </div>
     );
   }
