@@ -75,16 +75,17 @@ class TerminalInput extends TerminalInputReadOnly {
 
   renderTextField() {
     return (
-      <Textarea className="terminal-input-field"
-                spellCheck={false}
-                readOnly={false}
-                onChange={this.handleInputChange}
-                onKeyUp={this.handleKeyUp}
-                value={this.state.currentInput}
-                autoFocus
-                inputRef={tag => tag.onkeydown = e => {
-                  if (e.keyCode === 13) e.preventDefault()
-                }}/>
+      <Textarea
+        className="terminal-input-field"
+        spellCheck={false}
+        readOnly={false}
+        onChange={this.handleInputChange}
+        onKeyUp={this.handleKeyUp}
+        value={this.state.currentInput}
+        autoFocus
+        inputRef={tag => tag.onkeydown = e => {
+          if (e.keyCode === 13) e.preventDefault();
+        }}/>
     );
   }
 }

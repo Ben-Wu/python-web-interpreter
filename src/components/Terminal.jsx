@@ -46,7 +46,7 @@ class Terminal extends React.Component {
     try {
       const currentOutput = window.pyodide.runPython(line);
       console.log(currentOutput);
-      lines.push(this.renderOutputLine(lines.length, currentOutput, false))
+      lines.push(this.renderOutputLine(lines.length, currentOutput, false));
     } catch (e) {
       const currentOutput = e.message.split('\n')
         .map((line, i) => <div className="error" key={i}>{line}</div>);
@@ -85,8 +85,9 @@ class Terminal extends React.Component {
       <div>
         <div className="terminal-output">Python {this.state.version}</div>
         {this.state.lines}
-        <TerminalInput onSubmit={this.handleSubmitLine} text={this.state.currentInput}
-                       readOnly={false} history={this.state.inputHistory}/>
+        <TerminalInput
+          onSubmit={this.handleSubmitLine} text={this.state.currentInput}
+          readOnly={false} history={this.state.inputHistory}/>
       </div>
     );
   }

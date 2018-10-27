@@ -10,10 +10,11 @@ class TerminalInputReadOnly extends React.Component {
 
   renderTextField() {
     return (
-      <Textarea className="terminal-input-field read-only"
-                spellCheck={false}
-                readOnly={true}
-                value={this.props.text || ''}/>
+      <Textarea
+        className="terminal-input-field read-only"
+        spellCheck={false}
+        readOnly={true}
+        value={this.props.text || ''}/>
     );
   }
 
