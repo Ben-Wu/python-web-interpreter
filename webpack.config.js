@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   entry: {main: './src/index.js'},
   output: {
-    path: path.resolve(__dirname, './docs'),
+    path: path.resolve(__dirname, './dist'),
     filename: 'app.[name].[chunkhash].js',
   },
   module: {
@@ -37,8 +37,7 @@ module.exports = {
       filename: 'index.html'
     }),
     new CopyWebpackPlugin([
-      { from: 'src/pyodide', to: 'pyodide' },
-      { from: 'CNAME', to: '' }
+      { from: 'src/pyodide', to: 'pyodide' }
     ])
   ],
   resolve: {
