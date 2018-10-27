@@ -12,8 +12,7 @@ class Terminal extends React.Component {
     super(props);
 
     this.state = {
-      currentOutput: '',
-      error: false,
+      currentInput: '',
       ready: false,
       version: '',
       lines: [],
@@ -21,6 +20,7 @@ class Terminal extends React.Component {
     };
 
     this.handleSubmitLine = this.handleSubmitLine.bind(this);
+    this.handleHistorySelected = this.handleHistorySelected.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +63,13 @@ class Terminal extends React.Component {
     });
   }
 
+  handleHistorySelected(text) {
+    console.log(text);
+    this.setState({
+      currentInput: text
+    });
+  }
+
   renderInputLine(key, text) {
     return (
       <TerminalInputReadOnly key={key} text={text}/>
@@ -87,7 +94,8 @@ class Terminal extends React.Component {
         <div className="terminal-output">Python {this.state.version}</div>
         {this.state.lines}
         <TerminalInput
-          onSubmit={this.handleSubmitLine} text={this.state.currentInput}
+          onSubmit={this.handleSubmitLine}
+          text={this.state.currentInput}
           readOnly={false} history={this.state.inputHistory}/>
       </div>
     );
@@ -96,7 +104,9 @@ class Terminal extends React.Component {
   renderToolsView() {
     return (
       <div className="terminal-tools">
-        <HistoryView lines={this.state.inputHistory}/>
+        <HistoryView
+          lines={this.state.inputHistory}
+          onLineSelected={this.handleHistorySelected}/>
       </div>
     );
   }

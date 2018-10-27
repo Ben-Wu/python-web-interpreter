@@ -17,6 +17,8 @@ class TerminalInput extends TerminalInputReadOnly {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+
+    this.inputField = React.createRef();
   }
 
   componentDidUpdate(prevProps) {
@@ -24,6 +26,11 @@ class TerminalInput extends TerminalInputReadOnly {
       this.setState({
         historyPosition: this.props.history.length
       });
+    } else if (prevProps.text !== this.props.text) {
+      this.setState({
+        currentInput: this.props.text
+      });
+      this.inputField.focus();
     }
   }
 
@@ -83,8 +90,11 @@ class TerminalInput extends TerminalInputReadOnly {
         onKeyUp={this.handleKeyUp}
         value={this.state.currentInput}
         autoFocus
-        inputRef={tag => tag.onkeydown = e => {
-          if (e.keyCode === 13) e.preventDefault();
+        inputRef={tag => {
+          this.inputField = tag;
+          tag.onkeydown = e => {
+            if (e.keyCode === 13) e.preventDefault();
+          }
         }}/>
     );
   }
