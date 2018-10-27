@@ -5,8 +5,9 @@ $color-primary-text: #fafafa;
 .terminal {
   display: flex;
   flex-direction: column;
-  background: #2a2a2e;
   flex-grow: 1;
+  overflow: auto;
+  background: #2a2a2e;
   color: $color-primary-text;
 }
 
@@ -25,8 +26,7 @@ $color-primary-text: #fafafa;
 }
 
 .terminal-input-field {
-  height: 100vh;
-  min-height: 100vh;
+  min-height: 70vh;
   flex-grow: 1;
   max-width: 97%;
   background: none;
