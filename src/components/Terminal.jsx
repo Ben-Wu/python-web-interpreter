@@ -1,5 +1,6 @@
 import React from 'react';
 
+import HistoryView from './HistoryView';
 import TerminalInput from './TerminalInput';
 import TerminalInputReadOnly from './TerminalInputReadOnly';
 import TerminalOutput from './TerminalOutput';
@@ -76,13 +77,13 @@ class Terminal extends React.Component {
 
   renderPyodideLoadingView() {
     return (
-      <div>Initializing Python...</div>
+      <div className="terminal-text">Initializing Python...</div>
     );
   }
 
   renderTerminalView() {
     return (
-      <div>
+      <div className="terminal-text">
         <div className="terminal-output">Python {this.state.version}</div>
         {this.state.lines}
         <TerminalInput
@@ -92,10 +93,19 @@ class Terminal extends React.Component {
     );
   }
 
+  renderToolsView() {
+    return (
+      <div className="terminal-tools">
+        <HistoryView lines={this.state.inputHistory}/>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="terminal">
         {this.state.ready ? this.renderTerminalView() : this.renderPyodideLoadingView()}
+        {this.state.ready ? this.renderToolsView() : ''}
       </div>
     );
   }

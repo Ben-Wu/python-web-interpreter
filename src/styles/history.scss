@@ -1,0 +1,54 @@
+$padding: 14px;
+
+.history-view {
+  min-height: 100%;
+  background: #242424;
+}
+
+.line-container {
+  @media (max-width: 1200px) {
+    min-height: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  @media (min-width: 1200px) {
+    min-width: 400px;
+    max-width: 400px;
+    overflow-x: auto;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  background: #333333;
+  padding: 6px $padding;
+  border-top: 1px solid #525252;
+  border-bottom: 1px solid #525252;
+  cursor: pointer;
+
+  &:hover {
+    background: #202020;
+  }
+
+  .icon {
+    flex-grow: 1;
+    text-align: end;
+  }
+}
+
+.history-line {
+  padding: 2px $padding;
+  cursor: pointer;
+
+  &:hover {
+    background: #474747;
+  }
+
+  .caret {
+    color: #ff7de3;
+  }
+}
+
+
