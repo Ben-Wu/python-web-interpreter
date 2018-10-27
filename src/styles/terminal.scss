@@ -8,10 +8,6 @@ $color-primary-text: #fafafa;
   background: #2a2a2e;
   flex-grow: 1;
   color: $color-primary-text;
-
-  @media (min-width: 1200px) {
-    flex-direction: row;
-  }
 }
 
 .terminal-text {
