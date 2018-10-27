@@ -64,7 +64,6 @@ class Terminal extends React.Component {
   }
 
   handleHistorySelected(text) {
-    console.log(text);
     this.setState({
       currentInput: text
     });

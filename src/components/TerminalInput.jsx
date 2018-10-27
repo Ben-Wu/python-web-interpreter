@@ -94,7 +94,7 @@ class TerminalInput extends TerminalInputReadOnly {
           this.inputField = tag;
           tag.onkeydown = e => {
             if (e.keyCode === 13) e.preventDefault();
-          }
+          };
         }}/>
     );
   }
