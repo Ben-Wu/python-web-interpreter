@@ -52,7 +52,7 @@ class TerminalInput extends TerminalInputReadOnly {
         return;
       }
       const historyPosition = Math.max(this.state.historyPosition - 1, 0);
-      const line = this.props.history[historyPosition];
+      const line = this.props.history[historyPosition].text;
       if (historyPosition === this.props.history.length - 1) {
         this.setState({
           currentInput: line,
@@ -72,7 +72,7 @@ class TerminalInput extends TerminalInputReadOnly {
       const historyPosition = Math.min(this.state.historyPosition + 1, this.props.history.length);
       const line = historyPosition === this.props.history.length
         ? this.state.pendingInput
-        : this.props.history[historyPosition];
+        : this.props.history[historyPosition].text;
       this.setState({
         currentInput: line,
         historyPosition

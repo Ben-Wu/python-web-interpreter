@@ -31,8 +31,8 @@ class HistoryView extends React.Component {
         <div className={`line-container ${this.state.collapsed ? 'collapsed' : ''}`}>
           {this.props.lines.map((line, i) =>
             <div className="history-line" key={i}
-                 onClick={() => this.props.onLineSelected(line)}>
-              <span className="caret">>> </span>{line}
+                 onClick={() => this.props.onLineSelected(line.text)}>
+              <span className="prefix">[{line.time}] - </span>{line.text}
             </div>
           )}
         </div>

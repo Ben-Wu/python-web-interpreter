@@ -55,7 +55,10 @@ class Terminal extends React.Component {
     }
 
     const inputHistory = this.state.inputHistory.slice();
-    inputHistory.push(line);
+    inputHistory.push({
+      time: new Date().toLocaleString(),
+      text: line
+    });
 
     this.setState({
       inputHistory,
