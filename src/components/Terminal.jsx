@@ -47,7 +47,15 @@ class Terminal extends React.Component {
     try {
       const currentOutput = window.pyodide.runPython(line);
       console.log(currentOutput);
-      lines.push(this.renderOutputLine(lines.length, currentOutput, false));
+      let formattedOutput = null;
+      if (typeof currentOutput === 'object') {
+        formattedOutput = JSON.stringify(currentOutput);
+      } else if (typeof currentOutput === 'function') {
+        formattedOutput = currentOutput.toString();
+      } else {
+        formattedOutput = currentOutput;
+      }
+      lines.push(this.renderOutputLine(lines.length, formattedOutput, false));
     } catch (e) {
       const currentOutput = e.message.split('\n')
         .map((line, i) => <div className="error" key={i}>{line}</div>);
