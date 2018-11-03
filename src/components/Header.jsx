@@ -7,6 +7,9 @@ class Header extends React.Component {
     return (
       <div className="app-header">
         <div className="app-header-title">Python Web Interpreter</div>
+        <a className="source-link" href="https://github.com/Ben-Wu/python-web-interpreter">
+          View Source
+        </a>
       </div>
     );
   }
